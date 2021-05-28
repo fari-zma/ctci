@@ -1,0 +1,66 @@
+// brute force, T = O(n2), S = O(1)
+boolean isUniuqe(String str) {
+    for(int i=0; i<str.length(); i++)
+        for(int j=i+1; j<str.length(); j++)
+            if(str.charAt(j) == str.charAt(i))
+                return false;
+
+    return true;
+}
+
+// optimal, T = O(n), S = O(n)
+boolean isUniuqe(String str) {
+    HashSet<Character> hs = new HashSet<>();
+    for(int i=0; i<str.length(); i++) {
+        if(hs.contains(str.charAt(i)))
+            return false;
+
+        hs.add(str.charAt(i));
+    }
+    return true;
+}
+
+// optimal, T = O(n), S = O(1)
+static final int CHAR = 256;
+boolean isUniuqe(String str) {
+    boolean visited[] = new boolean[CHAR];
+
+    for(int i=0; i<str.length(); i++) {
+        if(visited[str.charAt(i)])
+            return false;
+
+        visited[str.charAt(i)] = true;
+    }
+    return true;
+}
+
+//  sort 
+boolean isUniuqe(String str) {
+    // sort - O(nlognn)
+    char[] ch_arr = str.toCharArray();
+    Arrays.sort(ch_arr);
+    str = "";
+    for(char ch : ch_arr)
+        str += ch;
+
+    for(int i=0; i<str.length() - 1; i++) 
+        if(str.charAt(i) == str.charAt(i + 1))
+            return false;
+
+    return true;
+}
+
+// optimal - bit - a-z
+// T = O(n), S = O(1)
+boolean isUniuqe(String str) {
+    int checker = 0;
+
+    for(int i=0; i<str.length(); i++) {
+        int val = str.charAt(i) - 'a';
+        if(check & (1 << val) == 0)
+            return false;
+
+        check = checker | (1 << val);
+    }
+    return true;
+}
